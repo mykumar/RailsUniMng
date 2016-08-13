@@ -1,0 +1,98 @@
+<div class="row">
+	<div class="col-md-8">
+
+		<div class="demo-card-wide mdl-card mdl-shadow--2dp" style="width: 100%;">
+		  <div class="mdl-card__title mdl-card--expand">
+		    <h2 class="mdl-card__title-text"><%= @batch.name %></h2>
+		  </div>
+		  <div class="mdl-card__supporting-text">
+			  	<h3>Listing all students of this batch</h3>
+
+				<% if @batch_students.empty? %>
+					<h4>No Students</h4>
+				<% else %>
+					<ul class="demo-list-icon mdl-list">
+					<% @batch_students.each do |student| %>
+						<li class="mdl-list__item">
+						<span class="mdl-list__item-primary-content">
+    					<i class="material-icons mdl-list__item-icon">person</i><%= student.first_name %><%= " #{student.last_name}"%>
+    					</span>
+    					</li>
+					<% end %>
+					</ul>
+				<% end %>
+
+				<h4>Add Students: </h4> 
+		  		<% if @students.empty? %>
+					<h4>No students</h4>
+				<% else %>
+						<%= form_for @batch do |f| %>
+							<%= f.collection_check_boxes :student_ids, current_user.students, 
+							:id, :first_name do |b| %> 							
+								<%= b.check_box %> 
+								<%= b.label %> <br>
+							<% end %>
+
+							<div class="actions">
+						    	<%= f.submit "Update Batch", class: "mdl-button mdl-js-button mdl-button--raised mdl-button--colored" %>
+						  	</div>
+						<% end %>
+				<% end %>
+								
+		  </div>
+		  <div class="mdl-card__actions mdl-card--border">
+		    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+		      <%= link_to 'Back', batches_path, class: "mdl-button mdl-js-button mdl-button--raised mdl-button--accent" %>
+		    </a>
+		    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+		      <%= link_to 'Edit', edit_batch_path(@batch), class: "mdl-button mdl-js-button mdl-button--raised mdl-button--accent" %> 
+		    </a>
+		  </div>
+
+		   <div class="mdl-card__menu">
+		    
+			<!-- Right aligned menu below button -->
+			<button id="demo-menu-lower-right"
+			        class="mdl-button mdl-js-button mdl-button--icon">
+			  <i class="material-icons">dashboard</i>
+			</button>
+
+			<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+			    for="demo-menu-lower-right">		     
+		      <% @batch_categories.each do |category| %>
+			  	<li class="mdl-menu__item"><%= category.name %></li>
+		  	  <% end %>						
+			</ul>
+		  </div>		  	
+		</div>		
+		
+	</div>
+
+	<div class="col-md-4">	
+	<div class="demo-card-wide mdl-card mdl-shadow--2dp" style="width: 100%">
+		  <div class="mdl-card__title">
+		    <h2 class="mdl-card__title-text">Assignments</h2>
+		  </div>
+		  <div class="mdl-card__supporting-text">
+		    <b>Listing all assignments</b> <br>
+
+		    <ul>
+	    	<% @batch_assignments.each do |assignment| %>
+		    	<li><%= assignment.name %></li>
+		    	<ul>
+		    		<li><%= assignment.description %></li>
+		    	</ul>
+		    <% end %>
+		    </ul>
+		    
+		    <div class="mdl-card__actions mdl-card--border">
+			   
+		  	</div>
+
+		  </div>		  
+	</div>
+</div>
+
+
+
+

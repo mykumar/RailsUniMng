@@ -1,0 +1,28 @@
+<%= form_for(@batch) do |f| %>
+  <% if @batch.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@batch.errors.count, "error") %> prohibited this batch from being saved:</h2>
+
+      <ul>
+      <% @batch.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <%= f.label :name, class: 'mdl-textfield__label' %><br>
+    <%= f.text_field :name, class: 'mdl-textfield__input' %>
+  </div>
+  <div>
+    <label>Select Categories</label><br>
+    <%= f.collection_check_boxes :category_ids, current_user.categories, :id, :name do |b| %> 
+    <%= b.check_box %> 
+    <%= b.label %> 
+    <% end %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
